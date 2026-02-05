@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐴 2026马年新春快乐</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #FF4500 100%);
@@ -18,460 +13,251 @@
             overflow-x: hidden;
             position: relative;
         }
-
-        /* 背景装饰 */
         .bg-decoration {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; overflow: hidden; z-index: 0;
         }
-
         /* 灯笼 */
-        .lantern {
-            position: absolute;
-            width: 60px;
-            height: 80px;
-            animation: swing 3s ease-in-out infinite;
-        }
-
+        .lantern { position: absolute; width: 60px; height: 80px; animation: swing 3s ease-in-out infinite; }
         .lantern:nth-child(1) { left: 5%; top: -10px; animation-delay: 0s; }
         .lantern:nth-child(2) { left: 25%; top: -20px; animation-delay: 0.5s; }
         .lantern:nth-child(3) { right: 25%; top: -15px; animation-delay: 1s; }
         .lantern:nth-child(4) { right: 5%; top: -10px; animation-delay: 1.5s; }
-
         .lantern-body {
-            width: 50px;
-            height: 60px;
+            width: 50px; height: 60px;
             background: linear-gradient(180deg, #FF6B6B 0%, #EE0000 50%, #CC0000 100%);
-            border-radius: 50% 50% 45% 45%;
-            margin: 0 auto;
-            position: relative;
+            border-radius: 50% 50% 45% 45%; margin: 0 auto; position: relative;
             box-shadow: 0 0 20px rgba(255, 100, 100, 0.8);
+            animation: lanternGlow 2s ease-in-out infinite;
         }
-
+        @keyframes lanternGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 100, 100, 0.8); }
+            50% { box-shadow: 0 0 40px rgba(255, 100, 100, 1), 0 0 60px rgba(255, 200, 100, 0.5); }
+        }
         .lantern-body::before {
-            content: '福';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            color: #FFD700;
-            font-weight: bold;
+            content: '福'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 24px; color: #FFD700; font-weight: bold;
         }
-
-        .lantern-top {
-            width: 30px;
-            height: 10px;
-            background: #FFD700;
-            margin: 0 auto;
-            border-radius: 3px;
-        }
-
-        .lantern-line {
-            width: 2px;
-            height: 20px;
-            background: #FFD700;
-            margin: 0 auto;
-        }
-
-        .lantern-bottom {
-            width: 20px;
-            height: 25px;
-            border: 2px solid #FFD700;
-            border-top: none;
-            margin: 0 auto;
-            position: relative;
-        }
-
+        .lantern-top { width: 30px; height: 10px; background: #FFD700; margin: 0 auto; border-radius: 3px; }
+        .lantern-line { width: 2px; height: 20px; background: #FFD700; margin: 0 auto; }
+        .lantern-bottom { width: 20px; height: 25px; border: 2px solid #FFD700; border-top: none; margin: 0 auto; position: relative; }
         .lantern-bottom::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 15px;
-            background: linear-gradient(180deg, #FFD700, #FF6B6B);
-            border-radius: 2px;
+            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+            width: 4px; height: 15px; background: linear-gradient(180deg, #FFD700, #FF6B6B); border-radius: 2px;
+        }
+        @keyframes swing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+
+        /* 爆竹 */
+        .firecracker {
+            position: fixed; pointer-events: none; z-index: 60;
+            font-size: 30px; animation: firecrackerFall linear forwards;
+        }
+        @keyframes firecrackerFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .firecracker-explosion {
+            position: fixed; pointer-events: none; z-index: 61;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: radial-gradient(circle, #FFD700 0%, #FF4500 50%, transparent 70%);
+            animation: explodeCracker 0.5s ease-out forwards;
+        }
+        @keyframes explodeCracker {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
         }
 
-        @keyframes swing {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
+        /* 倒计时 */
+        .countdown-container {
+            background: linear-gradient(145deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+            backdrop-filter: blur(10px); border-radius: 15px; padding: 15px 20px;
+            margin: 20px auto; border: 2px solid rgba(255, 215, 0, 0.5);
+            display: inline-block;
+        }
+        .countdown-title { font-size: 16px; color: #FFE4B5; margin-bottom: 10px; }
+        .countdown-display { display: flex; justify-content: center; gap: 10px; }
+        .countdown-item {
+            background: linear-gradient(180deg, #8B0000, #660000);
+            border: 2px solid #FFD700; border-radius: 8px; padding: 8px 12px; min-width: 50px;
+        }
+        .countdown-number { font-size: 24px; color: #FFD700; font-weight: bold; }
+        .countdown-label { font-size: 12px; color: #FFE4B5; }
+        .countdown-passed { font-size: 18px; color: #FFD700; }
+
+        /* 雪花/梅花飘落 */
+        .snowflake {
+            position: fixed; color: rgba(255, 255, 255, 0.8); font-size: 20px;
+            pointer-events: none; z-index: 50; animation: snowfall linear forwards;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        @keyframes snowfall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0.3; }
         }
 
         /* 主容器 */
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 80px 20px 40px;
-            text-align: center;
+            position: relative; z-index: 1; max-width: 500px;
+            margin: 0 auto; padding: 80px 20px 40px; text-align: center;
         }
 
         /* 马年图标 */
         .horse-icon {
-            font-size: 80px;
-            animation: bounce 2s ease-in-out infinite;
+            font-size: 80px; animation: horseRun 1.5s ease-in-out infinite;
             filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
         }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes horseRun {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            25% { transform: translateY(-20px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
+            75% { transform: translateY(-15px) rotate(0deg); }
         }
 
-        /* 年份 */
-        .year {
-            font-size: 48px;
-            color: #FFD700;
-            font-weight: bold;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            margin: 20px 0;
-            letter-spacing: 5px;
-        }
-
-        /* 主标题 */
-        .title {
-            font-size: 36px;
-            color: #FFF;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 24px;
-            color: #FFE4B5;
-            margin-bottom: 30px;
-        }
+        .year { font-size: 48px; color: #FFD700; font-weight: bold; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); margin: 20px 0; letter-spacing: 5px; }
+        .title { font-size: 36px; color: #FFF; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 10px; }
+        .subtitle { font-size: 24px; color: #FFE4B5; margin-bottom: 30px; }
 
         /* 祝福卡片 */
         .blessing-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px 25px;
-            margin: 20px 0;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            backdrop-filter: blur(10px); border-radius: 20px; padding: 30px 25px; margin: 20px 0;
+            border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
-
-        .blessing-title {
-            font-size: 22px;
-            color: #FFD700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .blessing-list {
-            list-style: none;
-            text-align: left;
-        }
-
-        .blessing-list li {
-            color: #FFF;
-            font-size: 18px;
-            padding: 12px 0;
-            border-bottom: 1px dashed rgba(255, 215, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .blessing-list li:last-child {
-            border-bottom: none;
-        }
-
-        .blessing-list li::before {
-            content: '🐴';
-            font-size: 20px;
-        }
+        .blessing-title { font-size: 22px; color: #FFD700; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .blessing-list { list-style: none; text-align: left; }
+        .blessing-list li { color: #FFF; font-size: 18px; padding: 12px 0; border-bottom: 1px dashed rgba(255, 215, 0, 0.3); display: flex; align-items: center; gap: 10px; }
+        .blessing-list li:last-child { border-bottom: none; }
+        .blessing-list li::before { content: '🐴'; font-size: 20px; }
 
         /* 春联 */
-        .couplet-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-
+        .couplet-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
         .couplet {
             background: linear-gradient(180deg, #8B0000 0%, #660000 100%);
-            border: 3px solid #FFD700;
-            border-radius: 8px;
-            padding: 15px 12px;
-            writing-mode: vertical-rl;
-            font-size: 22px;
-            color: #FFD700;
-            font-weight: bold;
-            letter-spacing: 8px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border: 3px solid #FFD700; border-radius: 8px; padding: 15px 12px;
+            writing-mode: vertical-rl; font-size: 22px; color: #FFD700;
+            font-weight: bold; letter-spacing: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
-
         .couplet-horizontal {
             background: linear-gradient(90deg, #8B0000 0%, #660000 100%);
-            border: 3px solid #FFD700;
-            border-radius: 8px;
-            padding: 10px 25px;
-            font-size: 24px;
-            color: #FFD700;
-            font-weight: bold;
-            letter-spacing: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
+            border: 3px solid #FFD700; border-radius: 8px; padding: 10px 25px;
+            font-size: 24px; color: #FFD700; font-weight: bold; letter-spacing: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); margin-bottom: 20px;
         }
 
-        /* 红包动画 */
+        /* 红包 */
+        .red-envelope-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 30px 0; }
         .red-envelope {
-            width: 120px;
-            height: 160px;
+            width: 100px; height: 140px;
             background: linear-gradient(180deg, #FF4444 0%, #CC0000 100%);
-            border-radius: 10px;
-            margin: 30px auto;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            overflow: hidden;
+            border-radius: 10px; position: relative; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; overflow: hidden;
         }
-
-        .red-envelope:hover {
-            transform: scale(1.05);
-        }
-
-        .red-envelope:active {
-            transform: scale(0.95);
-        }
-
+        .red-envelope:hover { transform: scale(1.08) rotate(-2deg); }
+        .red-envelope:active { transform: scale(0.95); }
         .red-envelope::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background: #FFD700;
-            border-radius: 50%;
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; background: #FFD700; border-radius: 50%;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
-
         .red-envelope::after {
-            content: '開';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 28px;
-            color: #CC0000;
-            font-weight: bold;
+            content: '開'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 22px; color: #CC0000; font-weight: bold;
         }
-
         .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 60%;
             background: linear-gradient(180deg, #FF6666 0%, #FF4444 100%);
-            border-radius: 10px 10px 50% 50%;
-            transition: transform 0.5s ease;
-            transform-origin: top center;
+            border-radius: 10px 10px 50% 50%; transition: transform 0.5s ease; transform-origin: top center;
         }
-
-        .red-envelope.opened .envelope-flap {
-            transform: rotateX(-180deg);
-        }
-
+        .red-envelope.opened .envelope-flap { transform: rotateX(-180deg); }
         .envelope-content {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            color: #FFD700;
-            opacity: 0;
-            transition: opacity 0.5s ease 0.3s;
-            white-space: nowrap;
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            font-size: 11px; color: #FFD700; opacity: 0; transition: opacity 0.5s ease 0.3s;
+            white-space: nowrap; text-align: center; line-height: 1.4;
         }
-
-        .red-envelope.opened .envelope-content {
-            opacity: 1;
-        }
-
-        .tap-hint {
-            font-size: 14px;
-            color: #FFE4B5;
-            margin-top: 10px;
-        }
+        .red-envelope.opened .envelope-content { opacity: 1; }
+        .envelope-amount { font-size: 16px; font-weight: bold; display: block; }
+        .tap-hint { font-size: 14px; color: #FFE4B5; margin-top: 10px; }
 
         /* 底部祝福 */
-        .footer-blessing {
-            margin-top: 40px;
-            padding: 20px;
-            font-size: 20px;
-            color: #FFD700;
-            animation: glow 2s ease-in-out infinite;
-        }
-
+        .footer-blessing { margin-top: 40px; padding: 20px; font-size: 20px; color: #FFD700; animation: glow 2s ease-in-out infinite; }
         @keyframes glow {
             0%, 100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
             50% { text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 215, 0, 0.5); }
         }
 
-        /* 烟花效果 */
-        .firework {
-            position: fixed;
-            pointer-events: none;
-            z-index: 100;
+        /* 烟花 */
+        .firework { position: fixed; pointer-events: none; z-index: 100; }
+        .firework-trail {
+            position: fixed; width: 4px; height: 4px; background: #FFD700; border-radius: 50%;
+            pointer-events: none; z-index: 99; animation: riseUp 0.8s ease-out forwards;
         }
-
+        @keyframes riseUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(var(--rise-height, -200px)); } }
         .firework-particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+            position: absolute; width: 8px; height: 8px; border-radius: 50%;
             animation: explode 1.5s ease-out forwards;
         }
-
-        @keyframes explode {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--tx), var(--ty)) scale(0);
-                opacity: 0;
-            }
+        .firework-particle::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: inherit; border-radius: 50%; filter: blur(2px); opacity: 0.6;
+            animation: trail 1.5s ease-out forwards;
         }
+        @keyframes explode { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+        @keyframes trail { 0% { transform: scale(1.5); opacity: 0.8; } 100% { transform: scale(0); opacity: 0; } }
 
-        /* 飘落的金币 */
-        .coin {
-            position: fixed;
-            font-size: 24px;
-            animation: fall linear forwards;
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
+        .coin { position: fixed; font-size: 24px; animation: fall linear forwards; pointer-events: none; z-index: 50; }
+        @keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 
         /* 音乐按钮 */
         .music-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 215, 0, 0.9);
-            border: none;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 200;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            position: fixed; top: 20px; right: 20px; width: 50px; height: 50px;
+            background: rgba(255, 215, 0, 0.9); border: none; border-radius: 50%;
+            font-size: 24px; cursor: pointer; z-index: 200;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.3s ease;
         }
+        .music-btn:hover { transform: scale(1.1); }
+        .music-btn.playing { animation: rotate 2s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .music-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .music-btn.playing {
-            animation: rotate 2s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 响应式 */
         @media (max-width: 400px) {
-            .title { font-size: 28px; }
-            .year { font-size: 36px; }
+            .title { font-size: 28px; } .year { font-size: 36px; }
             .couplet { font-size: 18px; padding: 12px 10px; }
             .blessing-list li { font-size: 16px; }
+            .red-envelope { width: 80px; height: 110px; }
+            .countdown-number { font-size: 18px; }
         }
     </style>
 </head>
 <body>
-    <!-- 背景灯笼 -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+
     <div class="bg-decoration">
-        <div class="lantern">
-            <div class="lantern-line"></div>
-            <div class="lantern-top"></div>
-            <div class="lantern-body"></div>
-            <div class="lantern-bottom"></div>
-        </div>
-        <div class="lantern">
-            <div class="lantern-line"></div>
-            <div class="lantern-top"></div>
-            <div class="lantern-body"></div>
-            <div class="lantern-bottom"></div>
-        </div>
-        <div class="lantern">
-            <div class="lantern-line"></div>
-            <div class="lantern-top"></div>
-            <div class="lantern-body"></div>
-            <div class="lantern-bottom"></div>
-        </div>
-        <div class="lantern">
-            <div class="lantern-line"></div>
-            <div class="lantern-top"></div>
-            <div class="lantern-body"></div>
-            <div class="lantern-bottom"></div>
-        </div>
+        <div class="lantern"><div class="lantern-line"></div><div class="lantern-top"></div><div class="lantern-body"></div><div class="lantern-bottom"></div></div>
+        <div class="lantern"><div class="lantern-line"></div><div class="lantern-top"></div><div class="lantern-body"></div><div class="lantern-bottom"></div></div>
+        <div class="lantern"><div class="lantern-line"></div><div class="lantern-top"></div><div class="lantern-body"></div><div class="lantern-bottom"></div></div>
+        <div class="lantern"><div class="lantern-line"></div><div class="lantern-top"></div><div class="lantern-body"></div><div class="lantern-bottom"></div></div>
     </div>
 
-    <!-- 主内容 -->
     <div class="container">
-        <!-- 马年图标 -->
         <div class="horse-icon">🐴</div>
-
-        <!-- 年份 -->
         <div class="year">2026</div>
-
-        <!-- 标题 -->
         <h1 class="title">新春快乐</h1>
         <p class="subtitle">丙午马年 · 万事如意</p>
 
-        <!-- 横批 -->
-        <div class="couplet-horizontal">马到成功</div>
+        <!-- 倒计时 -->
+        <div class="countdown-container">
+            <div class="countdown-title">🎊 距离2026春节还有 🎊</div>
+            <div class="countdown-display" id="countdown"></div>
+        </div>
 
-        <!-- 春联 -->
+        <div class="couplet-horizontal">马到成功</div>
         <div class="couplet-container">
             <div class="couplet">骏马奔腾迎新岁</div>
             <div class="couplet">春风得意展宏图</div>
         </div>
 
-        <!-- 祝福卡片 -->
         <div class="blessing-card">
-            <div class="blessing-title">
-                <span>🧧</span>
-                <span>新春祝福</span>
-                <span>🧧</span>
-            </div>
+            <div class="blessing-title"><span>🧧</span><span>新春祝福</span><span>🧧</span></div>
             <ul class="blessing-list">
                 <li>愿你马年行大运，事业腾飞步步高</li>
                 <li>愿你身体健康，龙马精神每一天</li>
@@ -481,63 +267,156 @@
             </ul>
         </div>
 
-        <!-- 红包 -->
-        <div class="red-envelope" onclick="openEnvelope(this)">
-            <div class="envelope-flap"></div>
-            <div class="envelope-content">🎊 恭喜发财 🎊</div>
+        <div class="red-envelope-container">
+            <div class="red-envelope" onclick="openEnvelope(this)">
+                <div class="envelope-flap"></div>
+                <div class="envelope-content"><span class="envelope-amount"></span><span class="envelope-blessing"></span></div>
+            </div>
+            <div class="red-envelope" onclick="openEnvelope(this)">
+                <div class="envelope-flap"></div>
+                <div class="envelope-content"><span class="envelope-amount"></span><span class="envelope-blessing"></span></div>
+            </div>
+            <div class="red-envelope" onclick="openEnvelope(this)">
+                <div class="envelope-flap"></div>
+                <div class="envelope-content"><span class="envelope-amount"></span><span class="envelope-blessing"></span></div>
+            </div>
         </div>
         <p class="tap-hint">👆 点击红包领取祝福</p>
 
-        <!-- 底部祝福 -->
-        <div class="footer-blessing">
-            🎊 恭祝马年大吉 · 新春快乐 🎊
-        </div>
+        <div class="footer-blessing">🎊 恭祝马年大吉 · 新春快乐 🎊</div>
     </div>
 
     <script>
+        let audioContext = null, isPlaying = false, musicInterval = null;
+
+        // 吉利金额
+        const luckyAmounts = [1.68, 6.66, 8.88, 16.88, 18.88, 28.88, 66.66, 88.88, 99.99, 168.00, 188.88, 666.66, 888.88];
+        const blessings = ['恭喜发财', '财源滚滚', '马到成功', '万事如意', '心想事成', '新年快乐', '金玉满堂', '前程似锦', '大吉大利', '福星高照'];
+
+        // 春节倒计时 (2026年2月17日)
+        const springFestival = new Date('2026-02-17T00:00:00');
+        function updateCountdown() {
+            const now = new Date();
+            const diff = springFestival - now;
+            const container = document.getElementById('countdown');
+            if (diff <= 0) {
+                container.innerHTML = '<div class="countdown-passed">🎉 新春快乐！马年大吉！🎉</div>';
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            container.innerHTML = `
+                <div class="countdown-item"><div class="countdown-number">${days}</div><div class="countdown-label">天</div></div>
+                <div class="countdown-item"><div class="countdown-number">${hours}</div><div class="countdown-label">时</div></div>
+                <div class="countdown-item"><div class="countdown-number">${minutes}</div><div class="countdown-label">分</div></div>
+                <div class="countdown-item"><div class="countdown-number">${seconds}</div><div class="countdown-label">秒</div></div>
+            `;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
         // 打开红包
         function openEnvelope(el) {
             if (!el.classList.contains('opened')) {
                 el.classList.add('opened');
-                createFirework(window.innerWidth / 2, window.innerHeight / 2);
+                const amount = luckyAmounts[Math.floor(Math.random() * luckyAmounts.length)];
+                const blessing = blessings[Math.floor(Math.random() * blessings.length)];
+                el.querySelector('.envelope-amount').textContent = '¥' + amount.toFixed(2);
+                el.querySelector('.envelope-blessing').textContent = blessing;
+                const rect = el.getBoundingClientRect();
+                createFireworkWithTrail(rect.left + rect.width / 2, rect.top);
                 createCoins();
-
-                // 震动反馈（如果支持）
-                if (navigator.vibrate) {
-                    navigator.vibrate(100);
-                }
+                createFirecrackerBurst(rect.left + rect.width / 2, rect.top);
+                if (navigator.vibrate) navigator.vibrate([50, 30, 100]);
+                setTimeout(() => el.classList.remove('opened'), 4000);
             }
         }
 
-        // 创建烟花
+        // 爆竹效果
+        function createFirecracker() {
+            const cracker = document.createElement('div');
+            cracker.className = 'firecracker';
+            cracker.textContent = '🧨';
+            cracker.style.left = Math.random() * window.innerWidth + 'px';
+            cracker.style.animationDuration = (3 + Math.random() * 2) + 's';
+            document.body.appendChild(cracker);
+            const explodeTime = (2 + Math.random()) * 1000;
+            setTimeout(() => {
+                const rect = cracker.getBoundingClientRect();
+                createCrackerExplosion(rect.left, rect.top);
+            }, explodeTime);
+            setTimeout(() => cracker.remove(), 5000);
+        }
+
+        function createCrackerExplosion(x, y) {
+            const explosion = document.createElement('div');
+            explosion.className = 'firecracker-explosion';
+            explosion.style.left = (x - 30) + 'px';
+            explosion.style.top = (y - 30) + 'px';
+            document.body.appendChild(explosion);
+            setTimeout(() => explosion.remove(), 500);
+        }
+
+        function createFirecrackerBurst(x, y) {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() - 0.5) * 100;
+                    const offsetY = (Math.random() - 0.5) * 100;
+                    createCrackerExplosion(x + offsetX, y + offsetY);
+                }, i * 100);
+            }
+        }
+
+        // 定时放爆竹
+        setInterval(createFirecracker, 2000);
+
+        // 烟花
+        function createFireworkWithTrail(x, y) {
+            const startY = window.innerHeight, riseHeight = startY - y;
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const trail = document.createElement('div');
+                    trail.className = 'firework-trail';
+                    trail.style.left = (x + (Math.random() - 0.5) * 10) + 'px';
+                    trail.style.top = (startY - i * (riseHeight / 8)) + 'px';
+                    trail.style.setProperty('--rise-height', `-${riseHeight / 4}px`);
+                    document.body.appendChild(trail);
+                    setTimeout(() => trail.remove(), 800);
+                }, i * 50);
+            }
+            setTimeout(() => {
+                createFirework(x, y);
+                setTimeout(() => { createFirework(x - 30, y + 20); createFirework(x + 30, y + 20); }, 200);
+            }, 400);
+        }
+
         function createFirework(x, y) {
-            const colors = ['#FFD700', '#FF6B6B', '#FF69B4', '#00FF7F', '#87CEEB', '#FFA500'];
+            const colors = ['#FFD700', '#FF6B6B', '#FF69B4', '#00FF7F', '#87CEEB', '#FFA500', '#FF1493', '#00FFFF'];
             const firework = document.createElement('div');
             firework.className = 'firework';
             firework.style.left = x + 'px';
             firework.style.top = y + 'px';
             document.body.appendChild(firework);
-
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 40; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'firework-particle';
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-                const angle = (Math.PI * 2 * i) / 30;
-                const distance = 100 + Math.random() * 100;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 6px ${color}`;
+                const angle = (Math.PI * 2 * i) / 40;
+                const distance = 80 + Math.random() * 120;
                 particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
                 particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
-
                 firework.appendChild(particle);
             }
-
             setTimeout(() => firework.remove(), 1500);
         }
 
-        // 创建金币雨
         function createCoins() {
-            const emojis = ['🪙', '💰', '🧧', '✨', '🎊'];
-            for (let i = 0; i < 20; i++) {
+            const emojis = ['🪙', '💰', '🧧', '✨', '🎊', '🐴', '🎉'];
+            for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
                     const coin = document.createElement('div');
                     coin.className = 'coin';
@@ -545,35 +424,76 @@
                     coin.style.left = Math.random() * window.innerWidth + 'px';
                     coin.style.animationDuration = (2 + Math.random() * 2) + 's';
                     document.body.appendChild(coin);
-
                     setTimeout(() => coin.remove(), 4000);
-                }, i * 100);
+                }, i * 80);
             }
         }
 
-        // 随机烟花
-        function randomFirework() {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * (window.innerHeight / 2);
-            createFirework(x, y);
+        function createSnowflake() {
+            const flakes = ['❄', '❅', '❆', '✿', '🌸', '✾'];
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.fontSize = (15 + Math.random() * 15) + 'px';
+            snowflake.style.animationDuration = (5 + Math.random() * 5) + 's';
+            snowflake.style.opacity = 0.5 + Math.random() * 0.5;
+            document.body.appendChild(snowflake);
+            setTimeout(() => snowflake.remove(), 10000);
         }
+        setInterval(createSnowflake, 300);
 
-        // 定时放烟花
-        setInterval(randomFirework, 3000);
+        function randomFirework() {
+            const x = 100 + Math.random() * (window.innerWidth - 200);
+            const y = 100 + Math.random() * (window.innerHeight / 3);
+            createFireworkWithTrail(x, y);
+        }
+        setInterval(randomFirework, 4000);
 
-        // 页面加载完成后放一次烟花
         window.onload = function() {
-            setTimeout(() => {
-                randomFirework();
-            }, 1000);
+            for (let i = 0; i < 10; i++) setTimeout(createSnowflake, i * 200);
+            setTimeout(randomFirework, 1500);
+            for (let i = 0; i < 3; i++) setTimeout(createFirecracker, i * 500);
         };
 
-        // 点击页面任意位置放烟花
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.red-envelope')) {
-                createFirework(e.clientX, e.clientY);
+            if (!e.target.closest('.red-envelope') && !e.target.closest('.music-btn')) {
+                createFireworkWithTrail(e.clientX, e.clientY);
             }
         });
+
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if (isPlaying) {
+                isPlaying = false; btn.classList.remove('playing'); btn.textContent = '🎵';
+                if (musicInterval) { clearInterval(musicInterval); musicInterval = null; }
+            } else {
+                isPlaying = true; btn.classList.add('playing'); btn.textContent = '🎶';
+                playMelody();
+            }
+        }
+
+        function playMelody() {
+            const notes = [523, 587, 659, 698, 784, 880, 988, 1047];
+            let noteIndex = 0;
+            function playNote() {
+                if (!isPlaying) return;
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                oscillator.frequency.value = notes[noteIndex % notes.length];
+                oscillator.type = 'sine';
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+                noteIndex++;
+            }
+            playNote();
+            musicInterval = setInterval(playNote, 600);
+        }
     </script>
 </body>
 </html>
